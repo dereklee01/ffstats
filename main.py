@@ -45,11 +45,15 @@ df = pd.DataFrame(columns = headers)
 # Create a for loop to fill mydata
 # all rows are located under the <tr> tags
 # all row items are located under the <td> tags
-for j in table1.find_all("tr")[1:]:
+
+# limit is used to decrease processing time and find only the necessary number of qb
+for j in table1.find_all("tr", limit=int(qb)+1)[1:]:
     row_data = j.find_all("td")
     row = [i.text for i in row_data]
     length = len(df)
     df.loc[length] = row
+
+print(df)
 
 # grabbing the highest point output
 print("QB: " + df.iloc[0,len(df.loc[0])-1])
