@@ -20,4 +20,12 @@ def config():
     url = 'https://www.footballguys.com/playerhistoricalstats?pos=qb&yr=' + year + '&startwk=' + week + '&stopwk=' + week + '&profile=p'
     wrurl = 'https://www.footballguys.com/playerhistoricalstats?pos=wr&yr=' + year + '&startwk=' + week + '&stopwk=' + week + '&profile=p'
 
-    return [year, week, qb, rb], [url, wrurl]
+    qbPts = 0
+    wrPts = 0
+    rbPts = 0
+    tePts = 0
+    flexPts = 0
+    kPts = 0
+    defPts = 0
+
+    return [year, week, qb, rb], [url, wrurl], [qbPts, wrPts, rbPts, tePts, flexPts, kPts, defPts]

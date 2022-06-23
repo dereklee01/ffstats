@@ -5,7 +5,7 @@ import lxml
 import pandas as pd
 import config
 
-configList, urlList = config.config()
+configList, urlList, ptsList = config.config()
 
 for url in urlList:
     # ask hosting server to fetch the url
@@ -43,10 +43,10 @@ for url in urlList:
             length = len(df)
             df.loc[length] = row
 
-        print(df)
+        ptsList[0] = float(df.iloc[0,len(df.loc[0])-1])
 
         # grabbing the highest point output
-        print("QB: " + df.iloc[0,len(df.loc[0])-1])
+        print("QB: " + df.iloc[0,1] + " " + df.iloc[0,len(df.loc[0])-1] + " points")
     else:
         # Create a for loop to fill mydata
         # all rows are located under the <tr> tags
@@ -57,6 +57,16 @@ for url in urlList:
             length = len(df)
             df.loc[length] = row
 
+        ptsList[1] = float(df.iloc[0,len(df.loc[0])-1]) + float(df.iloc[1,len(df.loc[0])-1])
+
         # grabbing the highest point output
-        print("WR1: " + df.iloc[0,len(df.loc[0])-1])
-        print("WR2: " + df.iloc[1,len(df.loc[0])-1])
+        print("WR1: " + df.iloc[0,1] + " " + df.iloc[0,len(df.loc[0])-1] + " points")
+        print("WR2: " + df.iloc[1,1] + " " + df.iloc[1,len(df.loc[0])-1] + " points")
+
+print(ptsList)
+total = 0
+for pts in ptsList:
+    total += pts
+
+print("\n")
+print("Total points for the " + configList[0] + " season, Week " + configList[1] + ": " + str(total) + " points!")
