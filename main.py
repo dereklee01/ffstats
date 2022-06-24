@@ -1,4 +1,5 @@
 # importing libraries
+from turtle import xcor
 from bs4 import BeautifulSoup
 import requests
 import lxml
@@ -6,6 +7,7 @@ import pandas as pd
 import config
 
 configList, urlList, ptsList = config.config()
+playerNameList = []
 
 for url in urlList:
     # ask hosting server to fetch the url
@@ -49,6 +51,8 @@ for url in urlList:
             # grabbing the highest point output
             print("QB" + str(x+1) + ": " + df.iloc[x,1] + " " + df.iloc[x,len(df.loc[0])-1] + " points")
 
+            playerNameList.append(df.iloc[x,1])
+
     elif "rb" in url:
         # Create a for loop to fill mydata
         # all rows are located under the <tr> tags
@@ -64,6 +68,8 @@ for url in urlList:
            
             # grabbing the highest point output
             print("RB" + str(x+1) + ": " + df.iloc[x,1] + " " + df.iloc[x,len(df.loc[0])-1] + " points")
+
+            playerNameList.append(df.iloc[x,1])
 
     elif "wr" in url:
         # Create a for loop to fill mydata
@@ -81,7 +87,9 @@ for url in urlList:
             # grabbing the highest point output
             print("WR" + str(x+1) + ": " + df.iloc[x,1] + " " + df.iloc[x,len(df.loc[0])-1] + " points")
 
-    else:
+            playerNameList.append(df.iloc[x,1])
+
+    elif "te" in url:
         # Create a for loop to fill mydata
         # all rows are located under the <tr> tags
         # all row items are located under the <td> tags
@@ -97,6 +105,33 @@ for url in urlList:
             # grabbing the highest point output
             print("TE" + str(x+1) + ": " + df.iloc[x,1] + " " + df.iloc[x,len(df.loc[0])-1] + " points")
 
+            playerNameList.append(df.iloc[x,1])
+
+    else:
+        # Create a for loop to fill mydata
+        # all rows are located under the <tr> tags
+        # all row items are located under the <td> tags
+
+        for j in table1.find_all("tr")[1:]:
+            row_data = j.find_all("td")
+            row = [i.text for i in row_data]
+            length = len(df)
+            df.loc[length] = row
+
+        flexPos = 0
+
+        for x in range(len(df)):
+            playerName = df.iloc[x,1]
+            if playerName not in playerNameList:
+                flexPos = x
+                break
+
+        ptsList[4] += float(df.iloc[flexPos,len(df.loc[0])-1])
+        
+        # grabbing the highest point output
+        print("FLEX: " + df.iloc[flexPos,1] + " " + df.iloc[flexPos,len(df.loc[0])-1] + " points")
+
+        playerNameList.append(df.iloc[flexPos,1])
 
 print(ptsList)
 total = 0
@@ -105,3 +140,9 @@ for pts in ptsList:
 
 print("\n")
 print("Max total points for the " + configList[0] + " season, Week " + configList[1] + ": " + str(total) + " points!")
+
+# to-do: figure out how to find the appropriate flex
+# idea is to use the specific flex url and go through each name and see if theyve already been used or not for rb/wr/te
+# first name that has not been used should become the flex and search ends right there
+
+# to-do: create new file for finding the correct players for each week; basically better file organization

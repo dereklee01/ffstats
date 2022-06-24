@@ -13,7 +13,7 @@ def config():
     rb = input("How many runningback slots?\n")
     wr = input("How many wide receiver slots?\n")
     te = input("How many tight end slots?\n")
-    # flex = input("How many flex (WR/RB/TE) slots?\n")
+    flex = input("How many flex (WR/RB/TE) slots?\n")
     # k = input("How many kicker slots?")
     # defense = input("How many team defense slots?")
 
@@ -22,6 +22,7 @@ def config():
     rburl = 'https://www.footballguys.com/playerhistoricalstats?pos=rb&yr=' + year + '&startwk=' + week + '&stopwk=' + week + '&profile=p'
     wrurl = 'https://www.footballguys.com/playerhistoricalstats?pos=wr&yr=' + year + '&startwk=' + week + '&stopwk=' + week + '&profile=p'
     teurl = 'https://www.footballguys.com/playerhistoricalstats?pos=te&yr=' + year + '&startwk=' + week + '&stopwk=' + week + '&profile=p'
+    flexurl = 'https://www.footballguys.com/playerhistoricalstats?pos=flex&yr=' + year + '&startwk=' + week + '&stopwk=' + week + '&profile=p'
 
     qbPts = 0
     rbPts = 0
@@ -31,4 +32,4 @@ def config():
     kPts = 0
     defPts = 0
 
-    return [year, week, qb, rb, wr, te], [url, rburl, wrurl, teurl], [qbPts, rbPts, wrPts, tePts, flexPts, kPts, defPts]
+    return [year, week, qb, rb, wr, te, flex], [url, rburl, wrurl, teurl, flexurl], [qbPts, rbPts, wrPts, tePts, flexPts, kPts, defPts]
