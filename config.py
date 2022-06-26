@@ -4,7 +4,28 @@ import requests
 import lxml
 import pandas as pd
 
+
 def config():
+
+    """Retrieves input information from the user and constructs URLs.
+
+    Football season year and week are obtained from the user. 
+    Team position numbers are also obtained, then constructed
+    into URLs. Lists of position slot numbers, URLs, and total 
+    points per position are organized into Python lists and passed
+    into the collectData function.
+
+    Args:
+        None
+
+    Returns:
+        configList: Python list that contains the year, week, and position slots for the fantasy team.
+        urlList: Python list that contains the URLs specific to each position.
+        ptsList: Python list that contains the total points scored by the fantasy team's positions.
+        playerNameList: Empty Python list that is initialized for use in collectData().
+    
+    """
+
     # grabbing user input for year, week, scoring preference, and team positions
     year = input("Please input the year you are looking for.\n")
     week = input("Please input the week you are looking for.\n")
@@ -26,12 +47,9 @@ def config():
     kurl = 'https://www.footballguys.com/playerhistoricalstats?pos=pk&yr=' + year + '&startwk=' + week + '&stopwk=' + week + '&profile=p'
     defurl = 'https://www.footballguys.com/playerhistoricalstats?pos=td&yr=' + year + '&startwk=' + week + '&stopwk=' + week + '&profile=p'
 
-    qbPts = 0
-    rbPts = 0
-    wrPts = 0
-    tePts = 0
-    flexPts = 0
-    kPts = 0
-    defPts = 0
+    qbPts, rbPts, wrPts, tePts, flexPts, kPts, defPts = 0, 0, 0, 0, 0, 0, 0
 
-    return [year, week, qb, rb, wr, te, flex, k, defense], [url, rburl, wrurl, teurl, flexurl, kurl, defurl], [qbPts, rbPts, wrPts, tePts, flexPts, kPts, defPts]
+    configList, urlList, ptsList = [year, week, qb, rb, wr, te, flex, k, defense], [url, rburl, wrurl, teurl, flexurl, kurl, defurl], [qbPts, rbPts, wrPts, tePts, flexPts, kPts, defPts]
+    playerNameList = []
+
+    return configList, urlList, ptsList, playerNameList
